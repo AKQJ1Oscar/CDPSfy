@@ -3,11 +3,21 @@
                 <label>My tracks</label>
         </div>
 </div>
-<%for (var t in tracks) {%>
-
-<a class="track col-sm-3" href='/tracks/<%=tracks[t].name%>'>
-        <p><%=tracks[t].name%></p>
-        <img src="<%=tracks[t].urlImg%>" style="width: 200px;">
-</a>
-
-<%}%>
+<div class="photos">
+        <%for (var t in tracks) {%>
+        
+        <ul>
+                <li>
+                        <span>
+                                <a href='/tracks/<%=tracks[t].name%>'>
+                                        <img src="<%=tracks[t].urlImg%>" style="width: 200px;">
+                                </a>
+                        </span>
+                        <span>
+                                <%=tracks[t].name%>
+                        </span>
+                </li>
+        </ul>
+        
+        <%}%>
+</div>
