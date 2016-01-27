@@ -164,7 +164,7 @@ exports.destroy = function (req, res) {
             });
         });
 	// Petición HTTP para borrar la canción del servidor nas
-	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.mp3', null, function(err, resp) {
+	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.' + req.params.trackId.extension, null, function(err, resp) {
 	  if (err) {
 	    return console.error('Delete failed:', err);
 	  }
