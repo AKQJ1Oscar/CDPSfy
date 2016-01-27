@@ -62,8 +62,8 @@ form {
 	padding-top: 25px;
 	padding-bottom: 45px;
 	position: relative;
-	margin-right: 3vw;
-	margin-left: 3vw;
+	margin-right: 1vw;
+	margin-left: 1vw;
 	overflow: hidden;
 	border-top: 4px solid #f50;
 	background-color: #666;
@@ -76,8 +76,8 @@ form {
 #container {
 	background: #fff;
   	margin-top: -100px;
-	margin-right: 3vw;
-	margin-left: 3vw;
+	margin-right: 1vw;
+	margin-left: 1vw;
 	padding-top: 100px;
 	padding-bottom: 600px;
 }
