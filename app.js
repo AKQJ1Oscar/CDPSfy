@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var methodOverride = require('method-override');
 
 // database connect
-mongoose.connect('mongodb://s1/tracks', function(err, res) {
+mongoose.connect('mongodb://localhost/tracks', function(err, res) {
   if (err) {
     console.log('ERROR: connecting to Database. ' + err);
   } else {
