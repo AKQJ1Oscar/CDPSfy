@@ -211,7 +211,7 @@ input[readonly] {
 
 .photos ul {
 	list-style: none;
-
+	margin-bottom: 25px;
 }
 
 .photos ul li { 
