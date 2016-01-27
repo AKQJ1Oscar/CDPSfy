@@ -38,7 +38,7 @@ exports.show = function (req, res) {
 exports.create = function (req, res) {
         var track = req.files.track;
 		//Si la cancion es undefined no se ha introducido nada
-		if(track!==undefined){
+		if (track !== undefined) {
 			console.log('Nuevo fichero de audio. Datos: ', track);
 			var id = track.name.split('.')[0];
 			var name = track.originalname.split('.')[0];
@@ -46,7 +46,7 @@ exports.create = function (req, res) {
 			var original = track.originalname; 
 			var ext = track.extension;
 			//Si la extension no se corresponde con un fichero de audio, no hacemos nada
-			if(ext == 'mp3' || ext == 'ogg' || ext== 'wav'){
+			if (ext == 'mp3' || ext == 'ogg' || ext== 'wav') {
 				console.log(ext);
 				var image = req.files.image;
 				//Si la imagen no existe, ponemos una por defecto
@@ -148,7 +148,7 @@ if (err) {
 exports.destroy = function (req, res) {
 
 	Tracks.findOne({name: req.params.trackId}, function(err, track) {
-		if (track.imgname !== ''){
+		if (track.imgname !== '') {
 			needle.request('delete', 'http://tracks.cdpsfy.es/imagen/' + track.imgname, null, function(err, resp) {
 			  if (err) {
 				return console.error('Delete failed:', err);
@@ -164,7 +164,7 @@ exports.destroy = function (req, res) {
             });
         });
 	// Petición HTTP para borrar la canción del servidor nas
-	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.mp3', null, function(err, resp) {
+	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + track.extension, null, function(err, resp) {
 	  if (err) {
 	    return console.error('Delete failed:', err);
 	  }
