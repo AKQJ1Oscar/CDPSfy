@@ -203,3 +203,40 @@ input[readonly] {
   padding-right: 0px;
   padding-left: 0px;
 }
+
+/* gallery display */
+.photos {
+  display: block;
+}
+
+.photos ul {
+  list-style: none;
+
+}
+
+.photos ul li { 
+	display: inline;
+	list-style: none;
+  	float: left;
+  	padding: 0 10px 0 0;
+  	text-align:center; 
+}
+
+.photos ul li span a {
+	background-color: #fff;
+}
+
+.photos ul li a {
+  display: block;
+  /*
+  margin-right: 10px;
+  margin-bottom: 7px; */
+  opacity: 0.75;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+.photos ul li a:hover {
+  opacity: 1.0;
+}
