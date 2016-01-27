@@ -121,28 +121,28 @@ form {
 }
 
 .btn-file {
-  position: relative;
-  overflow: hidden;
+	position: relative;
+	overflow: hidden;
 }
 
 .btn-file input[type=file] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-width: 100%;
-  min-height: 100%;
-  font-size: 100px;
-  text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  background: red;
-  cursor: inherit;
-  display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	background: red;
+	cursor: inherit;
+	display: block;
 }
 
 input[readonly] {
-  background-color: white !important;
-  cursor: text !important;
+	background-color: white !important;
+	cursor: text !important;
 }
 
 #botones {
@@ -171,54 +171,52 @@ input[readonly] {
 	box-sizing: border-box;
 	font-size: 16px;
   	line-height: 18px;
- 	 padding: 10px 15px;
- 	 height: 40px;
+ 	padding: 10px 15px;
+ 	height: 40px;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #FF7028;
-  border-color: #F50;
+	color: #fff;
+	background-color: #FF7028;
+	border-color: #F50;
 }
 
 .btn-primary:active {
-  color: #fff;
-  background-color: #f50;
-  border-color: #D54700;
+	color: #fff;
+	background-color: #f50;
+	border-color: #D54700;
 }
 
 .btn-primary:focus {
-  color: #fff;
-  background-color: #f50;
-  border-color: #D54700;
+	color: #fff;
+	background-color: #f50;
+	border-color: #D54700;
 }
 
 .btn-primary:hover {
-  color: #fff;
-  background-color: #f50;
-  border-color: #D54700;
+	color: #fff;
+	background-color: #f50;
+	border-color: #D54700;
 }
 
 .col-sm-4 {
-  padding-right: 0px;
-  padding-left: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
 }
 
 /* gallery display */
 .photos {
-  display: block;
+	display: block;
 }
 
 .photos ul {
-  list-style: none;
+	list-style: none;
 
 }
 
 .photos ul li { 
 	display: inline;
 	list-style: none;
-  	float: left;
-  	padding: 0 10px 0 0;
   	text-align:center; 
 }
 
@@ -227,16 +225,13 @@ input[readonly] {
 }
 
 .photos ul li a {
-  display: block;
-  /*
-  margin-right: 10px;
-  margin-bottom: 7px; */
-  opacity: 0.75;
-  -webkit-transition: all 0.3s linear;
-  -moz-transition: all 0.3s linear;
-  transition: all 0.3s linear;
+	display: block;
+	opacity: 0.75;
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s linear;
+	transition: all 0.3s linear;
 }
 
 .photos ul li a:hover {
-  opacity: 1.0;
+	opacity: 1.0;
 }
