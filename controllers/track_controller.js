@@ -38,7 +38,7 @@ exports.create = function (req, res) {
 		console.log('ERROR: Please select the track to be uploaded \n');
 		res.redirect('/tracks');
 	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
-		console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n);
+		console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n');
 		res.redirect('/tracks');
 	} else {
 		console.log('INFO: New track being uploaded: \n', track);
