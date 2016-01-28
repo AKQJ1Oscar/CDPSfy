@@ -39,7 +39,7 @@ exports.create = function (req, res) {
 	if (track !== undefined) {
 		console.log('Nuevo fichero de audio. Datos: ', track);
 //		var id = track.name.split('.')[0];
-		var name = track.originalname.split('.')[0];
+//		var name = track.originalname.split('.')[0];
 //		var datos = track.buffer;
 //		var original = track.originalname; 
 		var ext = track.extension;
