@@ -111,6 +111,12 @@ exports.create = function (req, res) {
 // Borra una canción (trackId) de la base de datos 
 // Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
 exports.destroy = function (req, res) {
+	// Petición HTTP para borrar la canción del servidor nas
+	console.log('INFO: Track being deleted \n');
+	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
+		if (err) return console.error('ERROR: ' + err + '\n');
+		console.log('OK: Track deleted successfully \n');
+	});
 	Tracks.findOne({name: req.params.trackId}, function (err, track) {
 		if (track.imgname !== '') {
 			console.log('INFO: Cover being deleted \n');
@@ -123,12 +129,6 @@ exports.destroy = function (req, res) {
 		track.remove(function (err, track) {
 			if (err) console.log('ERROR deleting track from database: ' + err);
 		});
-	});
-	// Petición HTTP para borrar la canción del servidor nas
-	console.log('INFO: Track being deleted \n');
-	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
-		if (err) return console.error('ERROR: ' + err + '\n');
-		console.log('OK: Track deleted successfully \n');
 	});
 	res.redirect('/tracks');
 }
