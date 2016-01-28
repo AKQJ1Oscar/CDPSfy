@@ -61,15 +61,11 @@ exports.create = function (req, res) {
 				urlImg: urlImg
 			});
 			new_track.save(function(err, new_track) {
-				if (err) {
-					console.log('Error al subir el audio: ' + err);
-				};
+				if (err) console.log('Error al subir el audio: ' + err);
 			});
 			// Mandamos la petición POST al servidor para guardar la canción
 			needle.post('http://tracks.cdpsfy.es', data, {multipart: true}, function optionalCallback(err, httpResponse, body) {
-				if (err) {
-					return console.error('upload failed:', err);
-				}
+				if (err) return console.error('upload failed:', err);
 				console.log('Upload successful!  Server responded with:', body);
 				res.redirect('/tracks');
 			});
@@ -101,16 +97,12 @@ exports.create = function (req, res) {
 			});
 			// Guardamos la canción en la Base de datos
 			new_track.save(function(err, new_track) {
-				if (err) {
-					console.log('Error al subir el audio: ' + err);
-				};
+				if (err) console.log('Error al subir el audio: ' + err);
 			});
 			// Mandamos la petición POST al servidor para guardar la canción y la imagen
 			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse, body) {
 				console.log("Se está subiendo");						  
-				if (err) {
-					return console.error('upload failed:', err);
-				}
+				if (err) return console.error('upload failed:', err);
 				console.log('Upload successful!  Server responded with:', body);
 				res.redirect('/tracks');
 			});
@@ -119,29 +111,23 @@ exports.create = function (req, res) {
 }
 
 // Borra una canción (trackId) de la base de datos 
-// Eliminar en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
+// Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
 exports.destroy = function (req, res) {
 	Tracks.findOne({name: req.params.trackId}, function (err, track) {
 		if (track.imgname !== '') {
 			needle.request('delete', 'http://tracks.cdpsfy.es/imagen/' + track.imgname, null, function(err, resp) {
-			if (err) {
-				return console.error('Delete failed:', err);
-			}
+			if (err) return console.error('Delete failed:', err);
 			console.log('Delete successful!  Server responded with:', resp.body);
 			});
 		}
 		// Borra la canción de la base de datos
 		track.remove(function (err, track) {
-			if (err) {
-				console.log('Error al borrar el audio: ' + err);
-			}
+			if (err) console.log('Error al borrar el audio: ' + err);
 		});
 	});
 	// Petición HTTP para borrar la canción del servidor nas
 	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
-		if (err) {
-			return console.error('Delete failed:', err);
-		}
+		if (err) return console.error('Delete failed:', err);
 		console.log('Delete successful!  Server responded with:', resp.body);
 	});
 	res.redirect('/tracks');
