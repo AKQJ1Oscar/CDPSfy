@@ -13,12 +13,12 @@ exports.list = function (req, res) {
 		if (err) res.send(500, err.message);
 		res.render('tracks/index', { tracks: tracks });
 	});
-};
+}
 
 // Devuelve la vista del formulario para subir una nueva canción
 exports.new = function (req, res) {
 	res.render('tracks/new');
-};
+}
 
 // Devuelve la vista de reproducción de una canción.
 // El campo track.url contiene la url donde se encuentra el fichero de audio
@@ -28,7 +28,7 @@ exports.show = function (req, res) {
 		if (err) return res.send(500, err.message);
 		res.render('tracks/show', { track: track });
 	});
-};
+}
 
 // Escribe una nueva canción en el registro de canciones.
 // Escribe en tracks.cdpsfy.es el fichero de audio contenido en req.files.track.buffer
@@ -38,10 +38,10 @@ exports.create = function (req, res) {
 	// Si la cancion es undefined no se ha introducido nada
 	if (track !== undefined) {
 		console.log('Nuevo fichero de audio. Datos: ', track);
-		var id = track.name.split('.')[0];
-		var name = track.originalname.split('.')[0];
-		var datos = track.buffer;
-		var original = track.originalname; 
+//		var id = track.name.split('.')[0];
+//		var name = track.originalname.split('.')[0];
+//		var datos = track.buffer;
+//		var original = track.originalname; 
 		var ext = track.extension;
 		// Si la extension no se corresponde con un fichero de audio, no hacemos nada
 		if (ext == 'mp3' || ext == 'ogg' || ext== 'wav') {
@@ -50,21 +50,21 @@ exports.create = function (req, res) {
 			// Si la imagen no existe, ponemos una por defecto
 			if (image !== undefined) {
 				console.log('Nueva portada. Datos: ', image);
-				var nameImg = image.originalname.split('.')[0];
-				var datosImg =  image.buffer;
-				var originalImg = image.originalname;
+//				var nameImg = image.originalname.split('.')[0];
+//				var datosImg =  image.buffer;
+//				var originalImg = image.originalname;
 				var ext1 = image.extension;
 				// Comprobamos la extensión de la imagen
 				if (ext1 == 'bmp' || ext1 == 'jpg' || ext1 == 'png' || ext1 == 'jpeg' || ext1 == 'gif') {
 					// archivos enviados en la petición post al servidor
 					var data = {
 						image: {
-							buffer      : datosImg,
+							buffer      : image.buffer,
 							filename    : image.originalname,
 							content_type: image.mimetype
 						},
 						track: {
-							buffer      : datos,
+							buffer      : track.buffer,
 							filename    : track.originalname,
 							content_type: track.mimetype
 						}
@@ -74,7 +74,7 @@ exports.create = function (req, res) {
 					var urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
 					// Escribe los metadatos de la nueva canción en el registro.
 					var new_track = new Tracks({
-						name: name,
+						name: track.originalname,
 						url: url,
 						imgname: image.originalname,
 						urlImg: urlImg
@@ -100,7 +100,7 @@ exports.create = function (req, res) {
 			} else {
 				var data = {
 					track: {
-						buffer      : datos,
+						buffer      : track.buffer,
 						filename    : track.originalname,
 						content_type: track.mimetype
 					}
@@ -109,7 +109,7 @@ exports.create = function (req, res) {
 				var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 				//Escribe los metadatos de la nueva canción en la base de datos.
 				var new_track = new Tracks({
-					name: name,
+					name: track.originalname,
 					url: url,
 					imgname: '',
 					urlImg: urlImg
@@ -137,7 +137,7 @@ exports.create = function (req, res) {
 		console.log('Introduzca una canción');
 		res.redirect('/tracks');
 	}
-};
+}
 
 // Borra una canción (trackId) de la base de datos 
 // Eliminar en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
@@ -166,4 +166,4 @@ exports.destroy = function (req, res) {
 		console.log('Delete successful!  Server responded with:', resp.body);
 	});
 	res.redirect('/tracks');
-};
+}
