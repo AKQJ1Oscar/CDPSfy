@@ -38,24 +38,17 @@ exports.create = function (req, res) {
 	// Si la cancion es undefined no se ha introducido nada
 	if (track !== undefined) {
 		console.log('Nuevo fichero de audio. Datos: ', track);
-//		var id = track.name.split('.')[0];
-//		var name = track.originalname.split('.')[0];
-//		var datos = track.buffer;
-//		var original = track.originalname; 
-		var ext = track.extension;
+		//var ext = track.extension;
 		// Si la extension no se corresponde con un fichero de audio, no hacemos nada
-		if (ext == 'mp3' || ext == 'ogg' || ext== 'wav') {
-			console.log(ext);
+		if (track.extension == 'mp3' || track.extension == 'ogg' || track.extension == 'wav') {
+			//console.log(ext);
 			var image = req.files.image;
 			// Si la imagen no existe, ponemos una por defecto
 			if (image !== undefined) {
 				console.log('Nueva portada. Datos: ', image);
-//				var nameImg = image.originalname.split('.')[0];
-//				var datosImg =  image.buffer;
-//				var originalImg = image.originalname;
-				var ext1 = image.extension;
+				//var ext1 = image.extension;
 				// Comprobamos la extensión de la imagen
-				if (ext1 == 'bmp' || ext1 == 'jpg' || ext1 == 'png' || ext1 == 'jpeg' || ext1 == 'gif') {
+				if (image.extension == 'bmp' || image.extension == 'jpg' || image.extension == 'png' || image.extension == 'jpeg' || image.extension == 'gif') {
 					// archivos enviados en la petición post al servidor
 					var data = {
 						image: {
