@@ -22,9 +22,7 @@ exports.new = function (req, res) {
 
 // Devuelve la vista de reproducción de una canción.
 // El campo track.url contiene la url donde se encuentra el fichero de audio
-
 exports.show = function (req, res) {
-    
 	console.log(req.params);
         Tracks.findOne({name: req.params.trackId}, function(err, track) {
 	    if(err) return res.send(500, err.message);
@@ -109,7 +107,7 @@ if (err) {
 						}
 	 				}
 					var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
-					var urlImg = 'http://tracks.cdpsfy.es/imagen/cover.jpg';
+					var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 
 					//Escribe los metadatos de la nueva canción en la base de datos.
 					var new_track = new Tracks({
