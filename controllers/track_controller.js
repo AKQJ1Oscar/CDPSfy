@@ -36,13 +36,15 @@ exports.create = function (req, res) {
 	var track = req.files.track;
 	if (track !== undefined) {
 		console.log('Nuevo fichero de audio. Datos: ', track);
-		//if (track.extension == 'mp3' || track.extension == 'ogg' || track.extension == 'wav') {
-		if (['mp3', 'ogg', 'wav'].indexOf(track.extension) > -1) {
+		if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
+			console.log('Introduzca una cancion con la extension adecuada. Extensiones soportadas: mp3, ogg y wav');
+			res.redirect('/tracks');
+		} else {
 			var image = req.files.image;
 			if (image !== undefined) {
 				console.log('Nueva portada. Datos: ', image);
 				// Comprobamos la extensión de la imagen
-				if (image.extension == 'bmp' || image.extension == 'jpg' || image.extension == 'png' || image.extension == 'jpeg' || image.extension == 'gif') {
+				if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) > -1) {
 					// archivos enviados en la petición post al servidor
 					var data = {
 						image: {
@@ -115,10 +117,6 @@ exports.create = function (req, res) {
 					res.redirect('/tracks');
 				});
 			}
-		} else { 
-			console.log('Introduzca una cancion con la extension adecuada. Extensiones soportadas: mp3, ogg y wav');
-			// redirigimos al index
-			res.redirect('/tracks');
 		}
 	} else { 
 		console.log('Introduzca una canción');
