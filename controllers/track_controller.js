@@ -95,7 +95,7 @@ exports.create = function (req, res) {
 						res.redirect('/tracks');
 					});
 				} else {
-					concole.log('Introduzca una imagen. Extensiones soportadas: gif, bmp, jpg, png, jpeg');
+					console.log('Introduzca una imagen. Extensiones soportadas: gif, bmp, jpg, png, jpeg');
 				}
 			} else {
 				var data = {
