@@ -111,7 +111,7 @@ exports.create = function (req, res) {
 // Borra una canción (trackId) de la base de datos 
 // Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
 exports.destroy = function (req, res) {
-	console.log('\n INFO: Track being deleted');
+	console.log('\nINFO: Track being deleted');
 	// Borra el fichero de audio indetificado por trackId en tracks.cdpsfy.es
 	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
 		if (err) return console.error('ERROR: ' + err + '\n');
