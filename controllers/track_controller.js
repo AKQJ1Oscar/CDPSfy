@@ -39,7 +39,7 @@ exports.create = function (req, res) {
 	if (track !== undefined) {
 		console.log('Nuevo fichero de audio. Datos: ', track);
 //		var id = track.name.split('.')[0];
-//		var name = track.originalname.split('.')[0];
+		var name = track.originalname.split('.')[0];
 //		var datos = track.buffer;
 //		var original = track.originalname; 
 		var ext = track.extension;
@@ -74,7 +74,7 @@ exports.create = function (req, res) {
 					var urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
 					// Escribe los metadatos de la nueva canción en el registro.
 					var new_track = new Tracks({
-						name: track.originalname,
+						name: name,
 						url: url,
 						imgname: image.originalname,
 						urlImg: urlImg
@@ -109,7 +109,7 @@ exports.create = function (req, res) {
 				var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 				//Escribe los metadatos de la nueva canción en la base de datos.
 				var new_track = new Tracks({
-					name: track.originalname,
+					name: name,
 					url: url,
 					imgname: '',
 					urlImg: urlImg
