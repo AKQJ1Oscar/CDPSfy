@@ -5,18 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
-var mongoose = require('mongoose');
 var methodOverride = require('method-override');
+var mongoose = require('mongoose');
 
 // database connect
 mongoose.connect('mongodb://localhost/tracks', function(err, res) {
   if (err) {
-    console.log('ERROR: connecting to Database. ' + err);
+    console.log('Connecting to database... ERROR: ' + err);
   } else {
-    console.log('Connected to Database');
+    console.log('Connecting to database... OK');
   }
 });
-
 require('./models/track');
 
 var routes = require('./routes/index');
