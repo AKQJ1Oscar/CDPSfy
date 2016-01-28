@@ -35,13 +35,13 @@ exports.show = function (req, res) {
 exports.create = function (req, res) {
 	var track = req.files.track;
 	if (!track) {
-		console.log('Introduzca una canción');
+		console.log('ERROR: Please select the track to be uploaded \n');
 		res.redirect('/tracks');
 	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
-		console.log('Introduzca una cancion con la extension adecuada. Extensiones soportadas: mp3, ogg y wav');
+		console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n);
 		res.redirect('/tracks');
 	} else {
-		console.log('Nuevo fichero de audio. Datos: ', track);
+		console.log('INFO: New track being uploaded: \n', track);
 		var image = req.files.image;
 		if (!image) {
 			var data = {
@@ -61,18 +61,18 @@ exports.create = function (req, res) {
 				urlImg: urlImg
 			});
 			new_track.save(function(err, new_track) {
-				if (err) console.log('Error al subir el audio: ' + err);
+				if (err) console.log('ERROR: ' + err);
 			});
 			// Mandamos la petición POST al servidor para guardar la canción
-			needle.post('http://tracks.cdpsfy.es', data, {multipart: true}, function optionalCallback(err, httpResponse, body) {
-				if (err) return console.error('upload failed:', err);
-				console.log('Upload successful!  Server responded with:', body);
+			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse, body) {
+				if (err) return console.error('ERROR: ' + err + '\n');
+				console.log('OK: Track uploaded successfully \n');
 				res.redirect('/tracks');
 			});
 		} else if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) < 0) {
-			console.log('Introduzca una imagen. Extensiones soportadas: gif, bmp, jpg, png, jpeg');
+			console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
 		} else {
-			console.log('Nueva portada. Datos: ', image);
+			console.log('INFO: New cover being uploaded: \n', image);
 			var data = {
 				image: {
 					buffer      : image.buffer,
@@ -95,15 +95,13 @@ exports.create = function (req, res) {
 				imgname: image.originalname,
 				urlImg: urlImg
 			});
-			// Guardamos la canción en la Base de datos
 			new_track.save(function(err, new_track) {
-				if (err) console.log('Error al subir el audio: ' + err);
+				if (err) console.log('ERROR: ' + err);
 			});
 			// Mandamos la petición POST al servidor para guardar la canción y la imagen
 			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse, body) {
-				console.log("Se está subiendo");						  
-				if (err) return console.error('upload failed:', err);
-				console.log('Upload successful!  Server responded with:', body);
+				if (err) return console.error('ERROR: ' + err + '\n');
+				console.log('OK: Track and cover uploaded successfully \n');
 				res.redirect('/tracks');
 			});
 		}
@@ -115,20 +113,22 @@ exports.create = function (req, res) {
 exports.destroy = function (req, res) {
 	Tracks.findOne({name: req.params.trackId}, function (err, track) {
 		if (track.imgname !== '') {
+			console.log('INFO: Cover being deleted \n');
 			needle.request('delete', 'http://tracks.cdpsfy.es/imagen/' + track.imgname, null, function(err, resp) {
-			if (err) return console.error('Delete failed:', err);
-			console.log('Delete successful!  Server responded with:', resp.body);
+				if (err) return console.error('ERROR: ' + err + '\n');
+				console.log('OK: Cover deleted successfully \n');
 			});
 		}
 		// Borra la canción de la base de datos
 		track.remove(function (err, track) {
-			if (err) console.log('Error al borrar el audio: ' + err);
+			if (err) console.log('ERROR deleting track from database: ' + err);
 		});
 	});
 	// Petición HTTP para borrar la canción del servidor nas
+	console.log('INFO: Track being deleted \n');
 	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
-		if (err) return console.error('Delete failed:', err);
-		console.log('Delete successful!  Server responded with:', resp.body);
+		if (err) return console.error('ERROR: ' + err + '\n');
+		console.log('OK: Track deleted successfully \n');
 	});
 	res.redirect('/tracks');
 }
