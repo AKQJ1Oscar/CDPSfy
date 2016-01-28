@@ -37,89 +37,87 @@ exports.create = function (req, res) {
 	if (!track) {
 		console.log('Introduzca una canción');
 		res.redirect('/tracks');
+	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
+		console.log('Introduzca una cancion con la extension adecuada. Extensiones soportadas: mp3, ogg y wav');
+		res.redirect('/tracks');
 	} else {
 		console.log('Nuevo fichero de audio. Datos: ', track);
-		if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
-			console.log('Introduzca una cancion con la extension adecuada. Extensiones soportadas: mp3, ogg y wav');
-			res.redirect('/tracks');
-		} else {
-			var image = req.files.image;
-			if (image !== undefined) {
-				console.log('Nueva portada. Datos: ', image);
-				// Comprobamos la extensión de la imagen
-				if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) > -1) {
-					// archivos enviados en la petición post al servidor
-					var data = {
-						image: {
-							buffer      : image.buffer,
-							filename    : image.originalname,
-							content_type: image.mimetype
-						},
-						track: {
-							buffer      : track.buffer,
-							filename    : track.originalname,
-							content_type: track.mimetype
-						}
-					}
-					// Esta url debe ser la correspondiente al nuevo fichero en tracks.cdpsfy.es
-					var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
-					var urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
-					// Escribe los metadatos de la nueva canción en el registro.
-					var new_track = new Tracks({
-						name: track.originalname.split('.')[0],
-						url: url,
-						imgname: image.originalname,
-						urlImg: urlImg
-					});
-					// Guardamos la canción en la Base de datos
-					new_track.save(function(err, new_track) {
-						if (err) {
-							console.log('Error al subir el audio: ' + err);
-						};
-					});
-					// Mandamos la petición POST al servidor para guardar la canción y la imagen
-					needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse, body) {
-						console.log("Se está subiendo");						  
-						if (err) {
-							return console.error('upload failed:', err);
-						}
-						console.log('Upload successful!  Server responded with:', body);
-						res.redirect('/tracks');
-					});
-				} else {
-					console.log('Introduzca una imagen. Extensiones soportadas: gif, bmp, jpg, png, jpeg');
-				}
-			} else {
+		var image = req.files.image;
+		if (image !== undefined) {
+			console.log('Nueva portada. Datos: ', image);
+			// Comprobamos la extensión de la imagen
+			if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) > -1) {
+				// archivos enviados en la petición post al servidor
 				var data = {
+					image: {
+						buffer      : image.buffer,
+						filename    : image.originalname,
+						content_type: image.mimetype
+					},
 					track: {
 						buffer      : track.buffer,
 						filename    : track.originalname,
 						content_type: track.mimetype
 					}
 				}
+				// Esta url debe ser la correspondiente al nuevo fichero en tracks.cdpsfy.es
 				var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
-				var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
-				//Escribe los metadatos de la nueva canción en la base de datos.
+				var urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
+				// Escribe los metadatos de la nueva canción en el registro.
 				var new_track = new Tracks({
 					name: track.originalname.split('.')[0],
 					url: url,
-					imgname: '',
+					imgname: image.originalname,
 					urlImg: urlImg
 				});
+				// Guardamos la canción en la Base de datos
 				new_track.save(function(err, new_track) {
 					if (err) {
 						console.log('Error al subir el audio: ' + err);
 					};
 				});
-				// Mandamos la petición POST al servidor para guardar la canción
-				needle.post('http://tracks.cdpsfy.es', data, {multipart: true}, function optionalCallback(err, httpResponse, body) {
+				// Mandamos la petición POST al servidor para guardar la canción y la imagen
+				needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse, body) {
+					console.log("Se está subiendo");						  
 					if (err) {
 						return console.error('upload failed:', err);
 					}
 					console.log('Upload successful!  Server responded with:', body);
 					res.redirect('/tracks');
 				});
+			} else {
+				console.log('Introduzca una imagen. Extensiones soportadas: gif, bmp, jpg, png, jpeg');
 			}
+		} else {
+			var data = {
+				track: {
+					buffer      : track.buffer,
+					filename    : track.originalname,
+					content_type: track.mimetype
+				}
+			}
+			var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
+			var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
+			//Escribe los metadatos de la nueva canción en la base de datos.
+			var new_track = new Tracks({
+				name: track.originalname.split('.')[0],
+				url: url,
+				imgname: '',
+				urlImg: urlImg
+			});
+			new_track.save(function(err, new_track) {
+				if (err) {
+					console.log('Error al subir el audio: ' + err);
+				};
+			});
+			// Mandamos la petición POST al servidor para guardar la canción
+			needle.post('http://tracks.cdpsfy.es', data, {multipart: true}, function optionalCallback(err, httpResponse, body) {
+				if (err) {
+					return console.error('upload failed:', err);
+				}
+				console.log('Upload successful!  Server responded with:', body);
+				res.redirect('/tracks');
+			});
 		}
 	}
 }
