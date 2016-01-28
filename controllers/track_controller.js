@@ -74,7 +74,7 @@ exports.create = function (req, res) {
 					var urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
 					// Escribe los metadatos de la nueva canción en el registro.
 					var new_track = new Tracks({
-						name: name,
+						name: track.originalname.split('.')[0],
 						url: url,
 						imgname: image.originalname,
 						urlImg: urlImg
@@ -109,7 +109,7 @@ exports.create = function (req, res) {
 				var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 				//Escribe los metadatos de la nueva canción en la base de datos.
 				var new_track = new Tracks({
-					name: name,
+					name: track.originalname.split('.')[0],
 					url: url,
 					imgname: '',
 					urlImg: urlImg
