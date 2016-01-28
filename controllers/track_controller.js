@@ -1,7 +1,6 @@
 var express = require('express');
 var fs = require('fs');
 var http = require('http');
-//var querystring = require('querystring');
 var mongoose = require('mongoose');
 var needle = require('needle');
 var Tracks = mongoose.model('Track');
@@ -35,18 +34,13 @@ exports.show = function (req, res) {
 // Escribe en la base de datos la verdadera url generada al añadir el fichero en el servidor tracks.cdpsfy.es
 exports.create = function (req, res) {
 	var track = req.files.track;
-	// Si la cancion es undefined no se ha introducido nada
 	if (track !== undefined) {
 		console.log('Nuevo fichero de audio. Datos: ', track);
-		//var ext = track.extension;
-		// Si la extension no se corresponde con un fichero de audio, no hacemos nada
-		if (track.extension == 'mp3' || track.extension == 'ogg' || track.extension == 'wav') {
-			//console.log(ext);
+		//if (track.extension == 'mp3' || track.extension == 'ogg' || track.extension == 'wav') {
+		if (['mp3', 'ogg', 'wav'].indexOf(track.extension) > -1) {
 			var image = req.files.image;
-			// Si la imagen no existe, ponemos una por defecto
 			if (image !== undefined) {
 				console.log('Nueva portada. Datos: ', image);
-				//var ext1 = image.extension;
 				// Comprobamos la extensión de la imagen
 				if (image.extension == 'bmp' || image.extension == 'jpg' || image.extension == 'png' || image.extension == 'jpeg' || image.extension == 'gif') {
 					// archivos enviados en la petición post al servidor
