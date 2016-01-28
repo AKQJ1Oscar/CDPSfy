@@ -34,7 +34,10 @@ exports.show = function (req, res) {
 // Escribe en la base de datos la verdadera url generada al añadir el fichero en el servidor tracks.cdpsfy.es
 exports.create = function (req, res) {
 	var track = req.files.track;
-	if (track !== undefined) {
+	if (!track) {
+		console.log('Introduzca una canción');
+		res.redirect('/tracks');
+	} else {
 		console.log('Nuevo fichero de audio. Datos: ', track);
 		if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
 			console.log('Introduzca una cancion con la extension adecuada. Extensiones soportadas: mp3, ogg y wav');
@@ -118,9 +121,6 @@ exports.create = function (req, res) {
 				});
 			}
 		}
-	} else { 
-		console.log('Introduzca una canción');
-		res.redirect('/tracks');
 	}
 }
 
