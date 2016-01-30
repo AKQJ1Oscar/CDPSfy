@@ -57,7 +57,7 @@ exports.create = function (req, res) {
 			var new_track = new Tracks({
 				name: track.originalname.split('.')[0],
 				url: url,
-				imgname: '',
+				imgname: undefined,
 				urlImg: urlImg
 			});
 			new_track.save(function(err, new_track) {
@@ -113,7 +113,7 @@ exports.create = function (req, res) {
 exports.destroy = function (req, res) {
 	console.log('\nINFO: Track being deleted');
 	Tracks.findOne({name: req.params.trackId}, function (err, track) {
-		if (track.imgname !== '') {
+		if (track.imgname) {
 			console.log('INFO: Cover being deleted');
 			needle.request('delete', 'http://tracks.cdpsfy.es/imagen/' + track.imgname, null, function(err, resp) {
 				if (err) return console.error('ERROR: ' + err + '\n');
