@@ -20,7 +20,6 @@ exports.new = function (req, res) {
 }
 
 // Devuelve la vista de reproducción de una canción
-// El campo track.url contiene la url donde se encuentra el fichero de audio
 exports.show = function (req, res) {
 	console.log(req.params);
 	Tracks.findOne({ name: req.params.trackId }, function(err, track) {
@@ -93,7 +92,7 @@ exports.create = function (req, res) {
 }
 
 // Borra una canción (trackId) de la base de datos 
-// Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
+// Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId y su carátula (si se subió una)
 exports.destroy = function (req, res) {
 	console.log('\nINFO: Track being deleted');
 	Tracks.findOne({ name: req.params.trackId }, function (err, track) {
