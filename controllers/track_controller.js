@@ -23,7 +23,7 @@ exports.new = function (req, res) {
 // El campo track.url contiene la url donde se encuentra el fichero de audio
 exports.show = function (req, res) {
 	console.log(req.params);
-	Tracks.findOne({name: req.params.trackId}, function(err, track) {
+	Tracks.findOne({ name: req.params.trackId }, function(err, track) {
 		if (err) return res.send(500, err.message);
 		res.render('tracks/show', { track: track });
 	});
@@ -65,15 +65,15 @@ exports.create = function (req, res) {
 		} else {
 			console.log('INFO: New cover being uploaded: \n', image);
 			var data = {
-				image: {
-					buffer      : image.buffer,
-					filename    : image.originalname,
-					content_type: image.mimetype
-				},
 				track: {
 					buffer      : track.buffer,
 					filename    : track.originalname,
 					content_type: track.mimetype
+				},
+				image: {
+					buffer      : image.buffer,
+					filename    : image.originalname,
+					content_type: image.mimetype
 				}
 			}
 			// Esta url es la correspondiente al nuevo fichero en tracks.cdpsfy.es
@@ -102,7 +102,7 @@ exports.create = function (req, res) {
 // Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
 exports.destroy = function (req, res) {
 	console.log('\nINFO: Track being deleted');
-	Tracks.findOne({name: req.params.trackId}, function (err, track) {
+	Tracks.findOne({ name: req.params.trackId }, function (err, track) {
 		if (track.imgname) {
 			console.log('INFO: Cover being deleted');
 			needle.request('delete', track.urlImg, null, function(err, res) {
