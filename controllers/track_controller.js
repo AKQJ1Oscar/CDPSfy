@@ -1,7 +1,5 @@
 var fs = require('fs');
-//var mongoose = require('mongoose');
 var needle = require('needle');
-//var Tracks = mongoose.model('Track');
 var Tracks = require('mongoose').model('Track');
 
 // Devuelve una lista de las canciones disponibles y sus metadatos
@@ -28,23 +26,21 @@ exports.show = function (req, res) {
 }
 
 // Escribe una nueva canción en el registro de canciones
-// Escribe en tracks.cdpsfy.es el fichero de audio contenido en req.files.track.buffer
-// Escribe en la base de datos la verdadera url generada al añadir el fichero en el servidor tracks.cdpsfy.es
+// Escribe en tracks.cdpsfy.es el fichero de audio (y el de su carátula si se sube una) contenido en req.files.track.buffer
+// Escribe en la base de datos las verdaderas url generada al añadir los ficheros en el servidor tracks.cdpsfy.es
 exports.create = function (req, res) {
 	var track = req.files.track;
-	var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
-	var imgname = undefined;
-	var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 	if (!track) {
-		console.log('ERROR: Please select the track to be uploaded \n');
-		res.redirect('/tracks');
+		return console.log('ERROR: Please select the track to be uploaded \n');
 	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
-		console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n');
-		res.redirect('/tracks');
+		return console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n');
 	} else {
 		console.log('INFO: New track being uploaded: \n', track);
+		var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
 		var image = req.files.image;
 		if (!image) {
+			var imgname = undefined;
+			var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 			var data = {
 				track: {
 					buffer      : track.buffer,
@@ -56,8 +52,8 @@ exports.create = function (req, res) {
 			return console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
 		} else {
 			console.log('INFO: New cover being uploaded: \n', image);
-			imgname = image.originalname;
-			urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
+			var imgname = image.originalname;
+			var urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
 			var data = {
 				track: {
 					buffer      : track.buffer,
