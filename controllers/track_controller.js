@@ -32,9 +32,8 @@ exports.create = function (req, res) {
 	var track = req.files.track;
 	if (!track) {
 		return console.log('ERROR: Please select the track to be uploaded \n');
-	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
-		return console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n');
-	} else {
+	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) return console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n');
+	else {
 		console.log('INFO: New track being uploaded: \n', track);
 		var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
 		var image = req.files.image;
@@ -48,9 +47,8 @@ exports.create = function (req, res) {
 					content_type: track.mimetype
 				}
 			}
-		} else if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) < 0) {
-			return console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
-		} else {
+		} else if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) < 0) return console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
+		else {
 			console.log('INFO: New cover being uploaded: \n', image);
 			var name_cover = image.originalname;
 			var url_cover = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
@@ -92,14 +90,14 @@ exports.destroy = function (req, res) {
 	console.log('\nINFO: Track being deleted');
 	Music.findOne({ name: req.params.trackId }, function (err, track) {
 		// Borra el fichero de audio en tracks.cdpsfy.es
-		needle.request('delete', track.url, null, function(err, res) {
+		needle.delete(track.url, null, function(err, res) {
 			if (err) return console.error('ERROR: ' + err + '\n');
 			console.log('OK: Track deleted successfully');
 		});
 		// Borra la carátula (si se subió una) en tracks.cdpsfy.es
 		if (track.name_cover) {
 			console.log('INFO: Cover being deleted');
-			needle.request('delete', track.url_cover, null, function(err, res) {
+			needle.delete(track.url_cover, null, function(err, res) {
 				if (err) return console.error('ERROR: ' + err + '\n');
 				console.log('OK: Cover deleted successfully');
 			});
