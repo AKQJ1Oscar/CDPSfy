@@ -64,7 +64,7 @@ exports.create = function (req, res) {
 				if (err) console.log('ERROR: ' + err);
 			});
 			// Petición POST al servidor para guardar la canción
-			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse) {
+			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function (err, httpResponse) {
 				if (err) return console.error('ERROR: ' + err + '\n');
 				console.log('OK: Track uploaded successfully \n');
 				res.redirect('/tracks');
@@ -98,7 +98,7 @@ exports.create = function (req, res) {
 				if (err) console.log('ERROR: ' + err);
 			});
 			// Petición POST al servidor para guardar la canción y la imagen
-			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse) {
+			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function (err, httpResponse) {
 				if (err) return console.error('ERROR: ' + err + '\n');
 				console.log('OK: Track and cover uploaded successfully \n');
 				res.redirect('/tracks');
