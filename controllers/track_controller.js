@@ -1,11 +1,11 @@
 var fs = require('fs');
 var needle = require('needle');
-var Tracks = require('mongoose').model('Track');
+var Music = require('mongoose').model('Music');
 
 // Devuelve una lista de las canciones disponibles y sus metadatos
 exports.list = function (req, res) {
 	// Busca las canciones existentes en la base de datos para mostrarlas en la lista
-	Tracks.find(function (err, tracks) {
+	Music.find(function (err, tracks) {
 		if (err) res.send(500, err.message);
 		res.render('tracks/index', { tracks: tracks });
 	});
@@ -19,7 +19,7 @@ exports.new = function (req, res) {
 // Devuelve la vista de reproducción de una canción
 exports.show = function (req, res) {
 	console.log(req.params);
-	Tracks.findOne({ name: req.params.trackId }, function(err, track) {
+	Music.findOne({ name: req.params.trackId }, function(err, track) {
 		if (err) return res.send(500, err.message);
 		res.render('tracks/show', { track: track });
 	});
@@ -68,7 +68,7 @@ exports.create = function (req, res) {
 			}
 		}
 		// Escribe los metadatos de la nueva canción en el registro
-		var new_track = new Tracks({
+		var new_track = new Music({
 			name: track.originalname.split('.')[0],
 			url: url,
 			name_cover: name_cover,
@@ -90,7 +90,7 @@ exports.create = function (req, res) {
 // Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId y su carátula (si se subió una)
 exports.destroy = function (req, res) {
 	console.log('\nINFO: Track being deleted');
-	Tracks.findOne({ name: req.params.trackId }, function (err, track) {
+	Music.findOne({ name: req.params.trackId }, function (err, track) {
 		// Borra el fichero de audio en tracks.cdpsfy.es
 		needle.request('delete', track.url, null, function(err, res) {
 			if (err) return console.error('ERROR: ' + err + '\n');
