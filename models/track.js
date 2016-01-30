@@ -2,7 +2,7 @@
 
 Modelo de datos de canciones (track)
 
-track_id: {
+musicSchema: {
 	name: nombre de la canción,
 	url: url del fichero de audio
 	name_cover: nombre de la carátula
@@ -14,11 +14,11 @@ track_id: {
 var mongoose = require('mongoose'),  
     Schema   = mongoose.Schema;
 
-var trackSchema = new Schema({  
+var musicSchema = new Schema({  
 	name:       { type: String },
 	url:        { type: String },
 	name_cover: { type: String },
 	url_cover:  { type: String }
 });
 
-module.exports = mongoose.model('Music', trackSchema);  
+module.exports = mongoose.model('Music', musicSchema);  
