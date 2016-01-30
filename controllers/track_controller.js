@@ -39,8 +39,8 @@ exports.create = function (req, res) {
 		var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
 		var image = req.files.image;
 		if (!image) {
-			var imgname = undefined;
-			var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
+			var name_cover = undefined;
+			var url_cover = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 			var data = {
 				track: {
 					buffer      : track.buffer,
@@ -52,8 +52,8 @@ exports.create = function (req, res) {
 			return console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
 		} else {
 			console.log('INFO: New cover being uploaded: \n', image);
-			var imgname = image.originalname;
-			var urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
+			var name_cover = image.originalname;
+			var url_cover = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
 			var data = {
 				track: {
 					buffer      : track.buffer,
@@ -71,8 +71,8 @@ exports.create = function (req, res) {
 		var new_track = new Tracks({
 			name: track.originalname.split('.')[0],
 			url: url,
-			imgname: imgname,
-			urlImg: urlImg
+			name_cover: name_cover,
+			url_cover: url_cover
 		});
 		new_track.save(function(err, new_track) {
 			if (err) console.log('ERROR: ' + err);
@@ -97,9 +97,9 @@ exports.destroy = function (req, res) {
 			console.log('OK: Track deleted successfully');
 		});
 		// Borra la carátula (si se subió una) en tracks.cdpsfy.es
-		if (track.imgname) {
+		if (track.name_cover) {
 			console.log('INFO: Cover being deleted');
-			needle.request('delete', track.urlImg, null, function(err, res) {
+			needle.request('delete', track.url_cover, null, function(err, res) {
 				if (err) return console.error('ERROR: ' + err + '\n');
 				console.log('OK: Cover deleted successfully');
 			});
