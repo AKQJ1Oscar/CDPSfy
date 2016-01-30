@@ -60,7 +60,7 @@ exports.create = function (req, res) {
 				imgname: undefined,
 				urlImg: urlImg
 			});
-		} else if (['bmp', 'gif', 'jpg', 'jpeg'].indexOf(image.extension) < 0) {
+		} else if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) < 0) {
 			return console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
 		} else {
 			console.log('INFO: New cover being uploaded: \n', image);
@@ -92,7 +92,7 @@ exports.create = function (req, res) {
 		// Petición POST al servidor para guardar la canción y la imagen
 		needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function (err, httpResponse) {
 			if (err) return console.error('ERROR: ' + err + '\n');
-			console.log('OK: Track and cover uploaded successfully \n');
+			console.log('OK: Upload successful \n');
 			res.redirect('/tracks');
 		});
 	}
