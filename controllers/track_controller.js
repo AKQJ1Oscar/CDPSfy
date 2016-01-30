@@ -53,8 +53,6 @@ exports.create = function (req, res) {
 					content_type: track.mimetype
 				}
 			}
-//			var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
-//			var urlImg = 'http://tracks.cdpsfy.es/imagen/default_cover.png';
 			// Guarda los metadatos de la canción en la base de datos
 			var new_track = new Tracks({
 				name: track.originalname.split('.')[0],
@@ -66,7 +64,7 @@ exports.create = function (req, res) {
 				if (err) console.log('ERROR: ' + err);
 			});
 			// Petición POST al servidor para guardar la canción
-			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse, body) {
+			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function (err, res) {
 				if (err) return console.error('ERROR: ' + err + '\n');
 				console.log('OK: Track uploaded successfully \n');
 				res.redirect('/tracks');
@@ -88,9 +86,8 @@ exports.create = function (req, res) {
 				}
 			}
 			// Esta url es la correspondiente al nuevo fichero en tracks.cdpsfy.es
-//			var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
-			urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
 			// Escribe los metadatos de la nueva canción en el registro
+			urlImg = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
 			var new_track = new Tracks({
 				name: track.originalname.split('.')[0],
 				url: url,
@@ -101,7 +98,7 @@ exports.create = function (req, res) {
 				if (err) console.log('ERROR: ' + err);
 			});
 			// Petición POST al servidor para guardar la canción y la imagen
-			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function optionalCallback(err, httpResponse, body) {
+			needle.post('http://tracks.cdpsfy.es', data, { multipart: true }, function (err, res) {
 				if (err) return console.error('ERROR: ' + err + '\n');
 				console.log('OK: Track and cover uploaded successfully \n');
 				res.redirect('/tracks');
@@ -117,13 +114,13 @@ exports.destroy = function (req, res) {
 	Tracks.findOne({name: req.params.trackId}, function (err, track) {
 		if (track.imgname) {
 			console.log('INFO: Cover being deleted');
-			needle.request('delete', 'http://tracks.cdpsfy.es/imagen/' + track.imgname, null, function(err, resp) {
+			needle.request('delete', track.urlImg, null, function(err, res) {
 				if (err) return console.error('ERROR: ' + err + '\n');
 				console.log('OK: Cover deleted successfully');
 			});
 		}
 		// Borra el fichero de audio indetificado por trackId en tracks.cdpsfy.es
-		needle.request('delete', track.url, null, function(err, resp) {
+		needle.request('delete', track.url, null, function(err, res) {
 			if (err) return console.error('ERROR: ' + err + '\n');
 			console.log('OK: Track deleted successfully');
 		});
