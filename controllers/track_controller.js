@@ -112,40 +112,6 @@ exports.create = function (req, res) {
 // Borra en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
 exports.destroy = function (req, res) {
 	console.log('\nINFO: Track being deleted');
-	// Borra el fichero de audio indetificado por trackId en tracks.cdpsfy.es
-	try {
-		try {
-			needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.mp3', null, function(err, resp) {
-				if (err) return;
-				console.log('OK: Track deleted successfully');
-			})
-		}
-		catch (err) {
-			try {
-				needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
-					if (err) return;
-					console.log('OK: Track deleted successfully');
-				})
-			}
-			catch (err) {
-				try {
-					needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.wav', null, function(err, resp) {
-						if (err) return;
-						console.log('OK: Track deleted successfully');
-					})
-				}
-				catch (err) {
-					console.log('ERROR: Track could not be deleted - unknown track extension')
-				}
-			}
-		}
-	} catch (err) {
-	    return console.error('ERROR: ' + err + '\n')
-	}
-//	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
-//		if (err) return console.error('ERROR: ' + err + '\n');
-//		console.log('OK: Track deleted successfully');
-//	});
 	Tracks.findOne({name: req.params.trackId}, function (err, track) {
 		if (track.imgname !== '') {
 			console.log('INFO: Cover being deleted');
@@ -154,6 +120,11 @@ exports.destroy = function (req, res) {
 				console.log('OK: Cover deleted successfully');
 			});
 		}
+		// Borra el fichero de audio indetificado por trackId en tracks.cdpsfy.es
+		needle.request('delete', track.url, null, function(err, resp) {
+			if (err) return console.error('ERROR: ' + err + '\n');
+			console.log('OK: Track deleted successfully');
+		});
 		// Borra la canción de la base de datos
 		track.remove(function (err, track) {
 			if (err) console.log('ERROR deleting track from database: ' + err);
