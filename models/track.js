@@ -21,4 +21,4 @@ var trackSchema = new Schema({
 	url_cover:  { type: String }
 });
 
-module.exports = mongoose.model('Track', trackSchema);  
+module.exports = mongoose.model('Music', trackSchema);  
