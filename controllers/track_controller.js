@@ -1,9 +1,8 @@
-//var express = require('express');
 var fs = require('fs');
-//var http = require('http');
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 var needle = require('needle');
-var Tracks = mongoose.model('Track');
+//var Tracks = mongoose.model('Track');
+var Tracks = require('mongoose').model('Track');
 
 // Devuelve una lista de las canciones disponibles y sus metadatos
 exports.list = function (req, res) {
