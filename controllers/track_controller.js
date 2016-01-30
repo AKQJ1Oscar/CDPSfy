@@ -113,18 +113,35 @@ exports.create = function (req, res) {
 exports.destroy = function (req, res) {
 	console.log('\nINFO: Track being deleted');
 	// Borra el fichero de audio indetificado por trackId en tracks.cdpsfy.es
-	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.mp3', null, function(err, resp) {
-		if (err) {
-			needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
-				if (err) {
-					needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.wav', null, function(err, resp) {
-						if (err) return console.error('ERROR: ' + err + '\n');
-					});
-				}
-			});
+	try {
+		try {
+			needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.mp3', null, function(err, resp) {
+				if (err) return;
+				console.log('OK: Track deleted successfully');
+			})
 		}
-		console.log('OK: Track deleted successfully');
-	});
+		catch (err) {
+			try {
+				needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
+					if (err) return;
+					console.log('OK: Track deleted successfully');
+				})
+			}
+			catch (err) {
+				try {
+					needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.wav', null, function(err, resp) {
+						if (err) return;
+						console.log('OK: Track deleted successfully');
+					})
+				}
+				catch (err) {
+					console.log('ERROR: Track could not be deleted - unknown track extension')
+				}
+			}
+		}
+	} catch (err) {
+	    return console.error('ERROR: ' + err + '\n')
+	}
 //	needle.request('delete', 'http://tracks.cdpsfy.es/cancion/' + req.params.trackId + '.ogg', null, function(err, resp) {
 //		if (err) return console.error('ERROR: ' + err + '\n');
 //		console.log('OK: Track deleted successfully');
