@@ -1,5 +1,5 @@
 <div class="track track_playing">
-	<p><%=track.name%></p>
+	<p style="font-size: 24px; margin-top: -25px;"><%=track.name%></p>
 	<img src="<%=track.url_cover%>">
 	<audio src="<%=track.url%>" type="audio/mpeg" controls="controls" style="display: block;"></audio>
 	<form method="post" action="/tracks/<%=track.name%>?_method=delete" style="margin-top: 10px;">
