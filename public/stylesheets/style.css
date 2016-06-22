@@ -99,7 +99,7 @@ form {
 audio {
 	display: block;
 	width: 302px;
-	margin: 0 auto;
+	margin: -22px auto;
 }
 
 .track {
