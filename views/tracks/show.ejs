@@ -2,7 +2,7 @@
 	<p style="color: #333; font-size: 24px; margin-top: -40px;"><%=track.name%></p>
 	<img src="<%=track.url_cover%>">
 	<audio src="<%=track.url%>" type="audio/mpeg" controls="controls" style="display: block;"></audio>
-	<form method="post" action="/tracks/<%=track.name%>?_method=delete" style="margin-top: 10px;">
+	<form method="post" action="/tracks/<%=track.name%>?_method=delete" style="margin-top: 16px;">
 		<button type="submit" class="btn btn-primary" onClick="return confirm('Are you sure you want to delete <%=track.name%>? ');">
 			Delete track
 		</button>
