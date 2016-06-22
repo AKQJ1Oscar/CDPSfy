@@ -23,7 +23,8 @@
                 Supported track files: MP3, Wav, Ogg
             </span>
             <% if (error != 0) { %>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" style="padding: 10px; margin-top: 25px;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Error:</strong> <%= error %>.
             </div>
             <% } %>
