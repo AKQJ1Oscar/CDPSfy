@@ -99,7 +99,7 @@ form {
 audio {
 	display: block;
 	width: 302px;
-	margin: 0 auto;
+	margin: 10px auto;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
