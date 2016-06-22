@@ -96,6 +96,12 @@ form {
 	margin-top: 20px;
 }
 
+audio {
+	display: block;
+	width: 302px;
+	height: 38px;
+}
+
 .track {
 	padding-top: 4vw;
 	text-decoration: none;
