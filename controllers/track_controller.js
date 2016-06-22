@@ -13,7 +13,7 @@ exports.list = function (req, res) {
 
 // Devuelve la vista del formulario para subir una nueva canción
 exports.new = function (req, res) {
-	res.render('tracks/new');
+	res.render('tracks/new', { error: 0 });
 }
 
 // Devuelve la vista de reproducción de una canción
