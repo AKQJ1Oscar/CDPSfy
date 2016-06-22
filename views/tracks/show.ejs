@@ -3,8 +3,8 @@
         <p><%=track.name%></p>
         <audio src="<%=track.url%>" type="audio/mpeg" controls="controls"></audio>
 
-        <form method="post" action="/tracks/<%=track.name%>?_method=delete">
-        	<button type="submit" onClick="return confirm('Are you sure you want to delete <%=track.name%>? ');">
+        <form method="post" action="/tracks/<%=track.name%>?_method=delete" style="margin-top: 10px;">
+        	<button type="submit" class="btn btn-primary" onClick="return confirm('Are you sure you want to delete <%=track.name%>? ');">
         		Delete track
         	</button>
         </form>
