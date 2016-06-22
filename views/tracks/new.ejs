@@ -17,11 +17,16 @@
             </span>
             <input type="text" class="form-control" readonly>
         </div>
-        <div class="col-sm-4 col-sm-offset-4"">
+        <div class="col-sm-4 col-sm-offset-4">
             <button type="submit" class="file-input btn btn-primary btn-file" style="width: 33%; float: left; margin-right: 10px;">Upload</button>
             <span class="help-block" style="margin-top: 8px;">
                 Supported track files: MP3, Wav, Ogg
             </span>
+            <% if (error != undefined) { %>
+            <div class="alert alert-danger">
+                <strong>Error:</strong> <%= error %>.
+            </div>
+            <% } %>
         </div>
     </form>
 </div>
