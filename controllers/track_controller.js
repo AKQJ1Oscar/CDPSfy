@@ -31,10 +31,12 @@ exports.show = function (req, res) {
 exports.create = function (req, res) {
 	var track = req.files.track;
 	if (!track) {
-		res.render('tracks/new', { error: "cagada" });
+		res.render('tracks/new', { error: "Please select the track to be uploaded" });
 		return console.log('ERROR: Please select the track to be uploaded \n');
-	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) return console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n');
-	else {
+	} else if (['mp3', 'ogg', 'wav'].indexOf(track.extension) < 0) {
+		res.render('tracks/new', { error: "Please upload .mp3, .ogg or .wav tracks" });
+		return console.log('ERROR: Please upload .mp3, .ogg or .wav tracks \n');
+	} else {
 		console.log('INFO: New track being uploaded: \n', track);
 		var url = 'http://tracks.cdpsfy.es/cancion/' + track.originalname;
 		var image = req.files.image;
@@ -48,8 +50,10 @@ exports.create = function (req, res) {
 					content_type: track.mimetype
 				}
 			}
-		} else if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) < 0) return console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
-		else {
+		} else if (['bmp', 'gif', 'jpg', 'jpeg', 'png'].indexOf(image.extension) < 0) {
+			res.render('tracks/new', { error: "Please upload .gif, .bmp, .jpg (.jpeg) or .png images" });
+			return console.log('ERROR: Please upload .gif, .bmp, .jpg (.jpeg) or .png images \n');
+		} else {
 			console.log('INFO: New cover being uploaded: \n', image);
 			var name_cover = image.originalname;
 			var url_cover = 'http://tracks.cdpsfy.es/imagen/' + image.originalname;
